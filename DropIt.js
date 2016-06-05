@@ -8,7 +8,7 @@ function dropElements(arr, func) {
             arr.splice(0, i);
             return arr;
         }
-        if (!(func(arr[i])) && (i === arr.length - 1)) {
+        else if (i === arr.length - 1) {
             return [];
         }
     }
