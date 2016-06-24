@@ -13,11 +13,6 @@ function orbitalPeriod(arr) {
     	arr1.push({name : arr[i].name, orbitalPeriod: t(arr[i].avgAlt)});
     }
 
-    for (var prop in arr[0]) {
-        console.log("obj." + prop + " = " + arr[0][prop]);
-    }
-
-    
     console.log('arr1 ' , arr1);
     return arr1;
 }

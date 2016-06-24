@@ -1,0 +1,67 @@
+@font-face {
+    font-family: "Remachine Script Personal Use";
+    src: url("http://db.onlinewebfonts.com/t/28ac560e1821e50a2af0f8b0830c5998.woff") format("woff"), url("http://db.onlinewebfonts.com/t/28ac560e1821e50a2af0f8b0830c5998.svg#Remachine Script Personal Use") format("svg");
+}
+
+body {
+    /*
+    background-image: url("http://www.myfreetextures.com/wp-content/uploads/2013/07/old-wood-floorboards-wooden-background-texture.jpg");
+    */
+    background-color: #ba456f;
+}
+
+.main {
+    max-width: 300px;
+    background: gainsboro;
+    margin: 0 auto;
+    padding: 1%;
+    position: relative;
+    top: 100px;
+    border-radius: 23px/30px;
+    box-shadow: 8px 2px 24px 7px grey inset;
+}
+
+header > p {
+    text-align: center;
+    /*
+    font-family: "Remachine Script Personal Use", Serif;
+    */
+    font-size: 30px;
+    color: #402449;
+    margin: 0;
+}
+
+header > p:last-child {
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+}
+
+.screen {
+    height: 44px;
+    width: auto;
+    font: 27px/30px monospace;
+    color: #626262;
+    background: #c7c7b0;
+    margin: 6px;
+    padding: 0px 5px;
+    border: 1px solid #c6c6c6;
+    box-shadow: 2px 1px 3px 1px grey inset;
+    text-align: right;
+    line-height: 46px;
+}
+
+div.buttons > button {
+    width: 59px;
+    max-height: 55px;
+    margin: 6px;
+    padding: 6px;
+    background-color: #000000;
+    color: beige;
+    font-size: 24px;
+    border-radius: 14px/14px;
+}
+
+div.buttons > button#ac,
+div.buttons > button#ce {
+    background-color: crimson;
+}

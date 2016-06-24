@@ -12,7 +12,7 @@ function steamrollArray(arr) {
                 console.log('emptyArray ', emptyArray);
             }
         }
-    };
+    }
     checkArr(arr);
     return emptyArray;
 }
