@@ -1,62 +1,137 @@
-    document.addEventListener("DOMContentLoaded", function(event) {
-        var value0 = "";
-        var value1 = "";
-        var idArray = [];
-        var button = document.querySelectorAll("button");
-        //  Func expression removes
-        var backspaceFunc = function removeLast(str) {
+document.addEventListener("DOMContentLoaded", function () {
+    var numbersArr = [],
+        stack = [],
+        tempValue = "",
+        buttId = "",
+        buttClass = "",
+        buttVal = "",
+        lastButtClass = "",
+        lastButtId = "",
+        button = document.querySelectorAll("button");
+
+    // Displays symbols on the calc screen
+    var showData = function calcScreen(data) {
+        if (data >= 1e+17){
+            data = "Overflow  error";
+        }
+        document.getElementsByClassName("screen")[0].innerHTML = data;
+        console.log('data ', data);
+
+    };
+
+    var removeLastChar = function (str) {
+        var str1 = str.substr(0, str.length - 1);
+        return str1;
+    };
+
+    //calculating string expression
+    var calculate = function calculations(array) {
+        var str = array.join("");
+        //finding expression with high priority
+        var regex1 = /\d*(?:\.\d+)?[\*\/%]\d*(?:\.\d+)?/;
+        //finding expression with low priority
+        var regex2 = /(?:\d*\.)?\d+[\+\-](?:\d*\.)?\d+/;
+        var found = "",
+            temp = "";
+
+        //extracting the expression from input str.
+        //calculates two operands depending on operator between them
+        function calcTwoOper(str) {
+
             var arr = str.split(/([\+\-\*\/%])/);
-            arr.pop();
-            return arr.join("");
-        };
-        // Displays symbols on the calc screen
-        var showData = function calcScreen(data) {
-            if (data.length < 17) {
-                document.getElementsByClassName("screen")[0].innerHTML = data;
-                console.log('data ', data);
-            } else {
-                document.getElementsByClassName("screen")[0].innerHTML = 'Overflow error';
+            if (arr[0] === "") {
+                return str;
             }
-        };
-        /*    var calculate = function calculations(str) {
-         console.log(eval(str));
-         return eval("str");
-         }*/
-        for (var i = 0; i < button.length; i++) {
-            button[i].addEventListener("click", function() {
-                if (this.value) {
-                    // checking if user enters two or more times operation symbols.
-                    if ((/[\+\-\*\/%]/).test(this.value) && (/[\+\-\*\/%]/).test(value0)) {
-                        value1 = value1.slice(0, -1) + this.value;
-                    // checking if user enters multiple symbol instead of number in the very beginning
-                    } else if ((/[\+\-\*\/%]/).test(this.value) && (idArray[0] === "")) {
-                        value1 = "";
-                        //else adding the input value to the string variable value1; value0 - kind of previous input number
-                    } else if(!(/[\+\-\*\/%]/).test(this.value) && (idArray[idArray.length - 1] === "equal")){
-                        value1 = this.value;
-                    } else {
-                        value0 = this.value;
-                        value1 += this.value;
-                    }
-                } else if (this.id === "leftArr") {
-                    value1 = value1.slice(0, -1);
-                } else if (this.id === "ce") {
-                    value1 = backspaceFunc(value1);
-                    console.log('value1CE ', value1);
-                } else if (this.id === "ac") {
-                    value1 = "";
-                }
-                showData(value1);
-                if (this.id === "equal") {
-                    value1 = (eval(value1) + '').substring(0, 16);
-                    console.log('eval', value1);
-                    showData(value1);
-                }
-                idArray[0] = this.id;
-                console.log('idArray[', i, '] ', idArray);
 
+            var a = Number(arr[0]);
+            var b = Number(arr[2]);
+            var result,
+                roundedResult;
 
-            });
+            switch (arr[1]) {
+                case "+":
+                    result = a + b;
+                    break;
+                case "-":
+                    result = a - b;
+                    break;
+                case "*":
+                    result = a * b;
+                    break;
+                case "/":
+                    result = a / b;
+                    break;
+                case "%":
+                    result = a % b;
+                    break;
+                default:
+                    return;
+            }
+            roundedResult = Math.round(result * 1e+15) / 1e+15;
+            return roundedResult + "";
         }
 
-    });
+        while (str.match(regex1)) {
+            temp = str.match(regex1)[0];
+            found = calcTwoOper(temp);
+            str = str.replace(regex1, found);
+        }
+        while (str.match(regex2)) {
+            temp = str.match(regex2)[0];
+            found = calcTwoOper(temp);
+            str = str.replace(regex2, found);
+        }
+        return str;
+    };
+
+    for (var i = 0; i < button.length; i++) {
+        button[i].addEventListener("click", function () {
+
+            buttClass = this.className;
+            buttVal = this.value;
+            buttId = this.id;
+
+            if (buttClass === "number") {
+                if ((lastButtClass === "operator") || (lastButtId === "equal")) {
+                    tempValue = "";
+                }
+
+                if ((buttVal === "." && (/\./.test(tempValue))) || (tempValue.length >= 16)) {
+                    //if user puts a second point in a number - Do nothing)
+                } else {
+                    tempValue += this.value;
+                }
+            }
+            if (buttClass === "operator") {
+                if (tempValue.charAt(tempValue.length-1) === "."){
+                    tempValue = removeLastChar(tempValue);
+                }
+                stack.push(tempValue);
+                stack.push(buttVal);
+            }
+            if (buttId === "ac") {
+                stack.length = 0;
+                tempValue = "";
+            }
+            if (buttId === "ce") {
+                tempValue = "";
+            }
+            if ((buttId === "leftArrow") && ((lastButtClass === "number") || (lastButtId === "leftArrow"))) {
+                tempValue = removeLastChar(tempValue);
+            }
+            if (buttId === "equal") {
+                if (tempValue.charAt(tempValue.length-1) === "."){
+                    tempValue = removeLastChar(tempValue);
+                }
+                stack.push(tempValue);
+                tempValue = calculate(stack);
+                stack.length = 0;
+                numbersArr.length = 0;
+            }
+            showData(tempValue);
+
+            lastButtClass = buttClass;
+            lastButtId = buttId;
+        });
+    }
+});

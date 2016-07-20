@@ -4,10 +4,7 @@
 }
 
 body {
-    /*
-    background-image: url("http://www.myfreetextures.com/wp-content/uploads/2013/07/old-wood-floorboards-wooden-background-texture.jpg");
-    */
-    background-color: #ba456f;
+    background-color: #3a73ba;
 }
 
 .main {
@@ -23,9 +20,7 @@ body {
 
 header > p {
     text-align: center;
-    /*
     font-family: "Remachine Script Personal Use", Serif;
-    */
     font-size: 30px;
     color: #402449;
     margin: 0;
@@ -59,6 +54,14 @@ div.buttons > button {
     color: beige;
     font-size: 24px;
     border-radius: 14px/14px;
+}
+
+div.buttons > button:visited {
+    outline: none;
+}
+
+div.buttons > button#mod {
+    padding: 6px 0px;
 }
 
 div.buttons > button#ac,
