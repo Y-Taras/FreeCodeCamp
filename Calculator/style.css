@@ -3,13 +3,18 @@
     src: url("http://db.onlinewebfonts.com/t/28ac560e1821e50a2af0f8b0830c5998.woff") format("woff"), url("http://db.onlinewebfonts.com/t/28ac560e1821e50a2af0f8b0830c5998.svg#Remachine Script Personal Use") format("svg");
 }
 
+@font-face {
+    font-family: 'digital-7';
+    src: url('./fonts/digital-7 (italic).ttf') format('truetype');
+}
+
 body {
     background-color: #3a73ba;
 }
 
 .main {
     max-width: 300px;
-    background: gainsboro;
+    background: #C5C4C2;
     margin: 0 auto;
     padding: 1%;
     position: relative;
@@ -27,44 +32,88 @@ header > p {
 }
 
 header > p:last-child {
+    margin-left: 24%;
+    margin-right: 6px;
+    font-size: 22px;
+    color: #424242;
+}
+
+header > p:last-child > span.digits {
+    float: right;
     font-family: 'Raleway', sans-serif;
     font-size: 16px;
+    line-height: 26px;
 }
 
 .screen {
     height: 44px;
     width: auto;
-    font: 27px/30px monospace;
-    color: #626262;
-    background: #c7c7b0;
+    font: 36px "digital-7", Serif;
+    color: #555555;
+    background: #929080;
     margin: 6px;
-    padding: 0px 5px;
+    padding: 0 5px;
     border: 1px solid #c6c6c6;
-    box-shadow: 2px 1px 3px 1px grey inset;
+    box-shadow: 4px 1px 4px 4px grey inset;
+    border-radius: 5px 5px;
     text-align: right;
-    line-height: 46px;
+    line-height: 40px;
+}
+
+div.buttons > div#logo {
+    float: left;
+    width: 59px;
+    font-size: 28px;
+    margin: 6px;
+    padding: 4px;
 }
 
 div.buttons > button {
     width: 59px;
-    max-height: 55px;
     margin: 6px;
     padding: 6px;
-    background-color: #000000;
-    color: beige;
+    background-color: #272729;
+    color: #e0e2e1;
     font-size: 24px;
-    border-radius: 14px/14px;
+    border-radius: 11px/15px;
+    border: 2px solid #272729;
+    box-shadow: 7px 6px 29px -12px rgba(0, 0, 0, 0.55);
+    outline: 0;
+    cursor: pointer;
 }
 
-div.buttons > button:visited {
-    outline: none;
+div.buttons > button:active {
+    transform: translateY(4px);
 }
 
-div.buttons > button#mod {
-    padding: 6px 0px;
+div.buttons > button::-moz-focus-inner {
+    border: 0;
+}
+
+div.buttons > button.operator,
+div.buttons > button.bracket,
+div.buttons > button#equal,
+div.buttons > button#leftArrow {
+    background-color: #848896;
+    box-shadow: 2px 2px 2px 2px #676b77 inset;
+}
+
+div.buttons > span#logo {
+    font-family: "Remachine Script Personal Use", Serif;
+    color: #424242;
+    width: 59px;
+    font-size: 25px;
+    margin: 0;
+    padding: 2px;
+}
+
+div.buttons > button#equal {
+    height: 104px;
+    float: right;
+    margin-right: 10px;
 }
 
 div.buttons > button#ac,
 div.buttons > button#ce {
-    background-color: crimson;
+    background-color: #5D2331;
 }

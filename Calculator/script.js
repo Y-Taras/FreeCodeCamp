@@ -1,137 +1,255 @@
 document.addEventListener("DOMContentLoaded", function () {
-    var numbersArr = [],
-        stack = [],
-        tempValue = "",
-        buttId = "",
-        buttClass = "",
-        buttVal = "",
-        lastButtClass = "",
-        lastButtId = "",
-        button = document.querySelectorAll("button");
+        "use strict";
+        var stack = [],
+            tempValue = "",//value of input number-string
+            buttId = "",
+            buttClass = "",
+            buttVal = "",//Value of input
+            button = document.querySelectorAll("button");
 
-    // Displays symbols on the calc screen
-    var showData = function calcScreen(data) {
-        if (data >= 1e+17){
-            data = "Overflow  error";
+        var precedence = {"^": 4, "*": 3, "/": 3, "+": 2, "-": 2};
+        var associativity = {"^": "Right", "*": "Left", "/": "Left", "+": "Left", "-": "Left"};
+
+        document.getElementsByClassName("screen")[0].innerHTML = "0";
+
+        function peek(array) {
+            return array[array.length - 1];
         }
-        document.getElementsByClassName("screen")[0].innerHTML = data;
-        console.log('data ', data);
 
-    };
+        function splitString(str) {
+            var arrayData = str.split(/([\+\-\*\/\(\)\^])/);
+            return arrayData.filter(Boolean);
+        }
 
-    var removeLastChar = function (str) {
-        var str1 = str.substr(0, str.length - 1);
-        return str1;
-    };
+        var postToInfix = function (strTokens) {
+            var parentheses = 0;
+            var out = [],
+                stack = [];
 
-    //calculating string expression
-    var calculate = function calculations(array) {
-        var str = array.join("");
-        //finding expression with high priority
-        var regex1 = /\d*(?:\.\d+)?[\*\/%]\d*(?:\.\d+)?/;
-        //finding expression with low priority
-        var regex2 = /(?:\d*\.)?\d+[\+\-](?:\d*\.)?\d+/;
-        var found = "",
-            temp = "";
-
-        //extracting the expression from input str.
-        //calculates two operands depending on operator between them
-        function calcTwoOper(str) {
-
-            var arr = str.split(/([\+\-\*\/%])/);
-            if (arr[0] === "") {
-                return str;
+            // if string starts with either of those
+            // ('.', '+', '*', '/', '^', '(') it must be incorrect
+            while (/[\.\+\*\/\^)]/.test(strTokens.charAt(0))) {
+                strTokens = strTokens.slice(1);
             }
-
-            var a = Number(arr[0]);
-            var b = Number(arr[2]);
-            var result,
-                roundedResult;
-
-            switch (arr[1]) {
-                case "+":
-                    result = a + b;
-                    break;
-                case "-":
-                    result = a - b;
-                    break;
-                case "*":
-                    result = a * b;
-                    break;
-                case "/":
-                    result = a / b;
-                    break;
-                case "%":
-                    result = a % b;
-                    break;
-                default:
-                    return;
+            //checking number of parentheses
+            var matchesArray1 = strTokens.match(/\(/g);
+            var matchesArray2 = strTokens.match(/\)/g);
+            // parentheses is broken
+            if (matchesArray1 && matchesArray2 &&
+                matchesArray1.length !== matchesArray2.length) {
+                return null;
             }
-            roundedResult = Math.round(result * 1e+15) / 1e+15;
-            return roundedResult + "";
-        }
+            // special case where negation happens at the beginning of input
+            if (strTokens.charAt(0) === '-') {
+                strTokens = '0' + strTokens;
+            }
+            // find places where negation occurs (i.e. '(-3)') and place zeros
+            // before minuses to make it standard subtraction
+            strTokens = strTokens.replace(/\(-/gi, "(0-");
+            var tokens = splitString(strTokens);
 
-        while (str.match(regex1)) {
-            temp = str.match(regex1)[0];
-            found = calcTwoOper(temp);
-            str = str.replace(regex1, found);
-        }
-        while (str.match(regex2)) {
-            temp = str.match(regex2)[0];
-            found = calcTwoOper(temp);
-            str = str.replace(regex2, found);
-        }
-        return str;
-    };
-
-    for (var i = 0; i < button.length; i++) {
-        button[i].addEventListener("click", function () {
-
-            buttClass = this.className;
-            buttVal = this.value;
-            buttId = this.id;
-
-            if (buttClass === "number") {
-                if ((lastButtClass === "operator") || (lastButtId === "equal")) {
-                    tempValue = "";
+            for (i = 0; i < tokens.length; i += 1) {
+                //If the token is a number, then add it to the output queue.
+                if (!isNaN(tokens[i])) {
+                    out += tokens[i] + " ";
                 }
+                /* If the token is an operator, o1, then:*/
+                if (precedence.hasOwnProperty(tokens[i])) {
+                    while ((precedence.hasOwnProperty(peek(stack))) &&
+                    ((associativity[tokens[i]] === "Left" && precedence[tokens[i]] <= precedence[peek(stack)]) ||
+                    (associativity[tokens[i]] === "Right" && precedence[tokens[i]] < precedence[peek(stack)]))) {
+                        out += stack.pop() + " ";
+                    }
+                    stack.push(tokens[i]);
+                }
+                //If the token is a left parenthesis (i.e. "("), then push it onto the stack.
+                if (tokens[i] === "(") {
+                    stack.push(tokens[i]);
+                }
+                //If the token is a right parenthesis (i.e. ")"):
+                if (tokens[i] === ")") {
+                    while (peek(stack) !== "(") {
+                        out += stack.pop() + " ";
+                    }
+                    if (peek(stack) === "(") {
+                        stack.pop();
+                    }
+                    else {
+                        console.log(" there are mismatched parentheses");
+                    }
+                }
+                console.log('i =', i, 'stack = ', stack, 'out = ', out);
+            }
+            while (stack.length) {
+                if (peek(stack) === "(" || peek(stack) === ")") {
+                    console.log(" there are mismatched parentheses");
+                }
+                out += stack.pop() + " ";
+            }
+            console.log('stack = ', stack, 'out = ', out);
+            return out;
+        };
 
-                if ((buttVal === "." && (/\./.test(tempValue))) || (tempValue.length >= 16)) {
-                    //if user puts a second point in a number - Do nothing)
+        function evalPostfixExpr(str) {
+            if (str === null) {
+                return "Error";
+            }
+            var arrayTokens = str.split(" ");
+            //remove last "" element of the array, and reverse it;
+            arrayTokens.pop();
+            arrayTokens = arrayTokens.reverse();
+            var stack = [];
+            while (arrayTokens.length > 0) {
+                var token = arrayTokens.pop();
+                if (!isNaN(token)) {
+                    stack.push(token);
                 } else {
-                    tempValue += this.value;
-                }
-            }
-            if (buttClass === "operator") {
-                if (tempValue.charAt(tempValue.length-1) === "."){
-                    tempValue = removeLastChar(tempValue);
-                }
-                stack.push(tempValue);
-                stack.push(buttVal);
-            }
-            if (buttId === "ac") {
-                stack.length = 0;
-                tempValue = "";
-            }
-            if (buttId === "ce") {
-                tempValue = "";
-            }
-            if ((buttId === "leftArrow") && ((lastButtClass === "number") || (lastButtId === "leftArrow"))) {
-                tempValue = removeLastChar(tempValue);
-            }
-            if (buttId === "equal") {
-                if (tempValue.charAt(tempValue.length-1) === "."){
-                    tempValue = removeLastChar(tempValue);
-                }
-                stack.push(tempValue);
-                tempValue = calculate(stack);
-                stack.length = 0;
-                numbersArr.length = 0;
-            }
-            showData(tempValue);
+                    // not enough values on stack
+                    if (stack.length < 2) {
+                        console.log("Error");
+                    }
+                    else {
+                        var secondArg = Number(stack.pop());
+                        var firstArg = Number(stack.pop());
+                        var d = 0;
 
-            lastButtClass = buttClass;
-            lastButtId = buttId;
-        });
+                        switch (token) {
+                            case '+':
+                                d = firstArg + secondArg;
+                                break;
+
+                            case '-':
+                                d = firstArg - secondArg;
+                                break;
+
+                            case '*':
+                                d = firstArg * secondArg;
+                                break;
+
+                            case '/':
+                                d = firstArg / secondArg;
+                                break;
+
+                            case '^':
+                                d = Math.pow(firstArg, secondArg);
+                                break;
+                        }
+                        stack.push(d);
+                    }
+                }
+            }
+            if (stack.length === 1) {
+                return function () {
+                    var finalEval = stack.pop();
+                    var lengthNum = String(finalEval).length;
+                    if (Math.abs(Number(finalEval)) >= 1e+15) {
+                        return "error";
+                    } else if (lengthNum >= 16) {
+                        finalEval = String(finalEval).slice(0, 14);
+                        return Number(finalEval);
+                    } else {
+                        return Number(finalEval);
+                    }
+                }();
+            }
+        }
+
+        // Displays symbols on the calc screen
+        function showData(data) {
+            if (data === "") {
+                document.getElementsByClassName("screen")[0].innerHTML = "0";
+            } else {
+                document.getElementsByClassName("screen")[0].innerHTML = data;
+            }
+        }
+
+        var improveInput = function calcScreen(data) {
+
+            var arrayData = splitString(data);
+            var arrLength = arrayData.length;
+            //getting index of last elem in array, that is a number
+            var i = 1;
+            while (isNaN(+arrayData[arrLength - i])) {
+                if (arrLength === i) {
+                    break;
+                }
+                i += 1;
+            }
+            if ((arrayData[arrLength - i - 2] === "(" && arrayData[arrLength - i - 1] === "-") ||
+                ((arrLength - i) === 1 && arrayData[0] === "-")) {
+                return "-" + arrayData[arrLength - i];
+            }
+            return arrayData[arrLength - i];
+        };
+
+        function ceFunc(str) {
+            var arr = splitString(str);
+            if (!isNaN(+peek(arr))) {
+                arr.pop();
+                arr = arr.join("");
+            }
+            return arr;
+        }
+
+        function leftArrowFunc(str) {
+            if (!/[\+\*\/\^\-\(\)]/.test(str.charAt(str.length - 1))) {
+                str = str.slice(0, -1);
+            }
+            return str;
+        }
+
+        for (var i = 0; i < button.length; i++) {
+
+            button[i].addEventListener("click", function () {
+
+                buttId = this.id;
+                buttClass = this.className;
+                buttVal = this.value;
+
+                switch (buttId) {
+                    case "ac":
+                        tempValue = "";
+                        showData(tempValue);
+                        break;
+                    case "ce":
+                        tempValue = ceFunc(tempValue);
+                        showData(improveInput(tempValue));
+                        break;
+                    case "leftArrow":
+                        tempValue = leftArrowFunc(tempValue);
+                        showData(improveInput(tempValue));
+                        break;
+                    case "equal":
+                        tempValue = evalPostfixExpr(postToInfix(tempValue));
+                        showData(tempValue);
+                        break;
+                    default:
+                        tempValue += buttVal;
+                        //second dot in a number or more than 15 digits. Illegal.
+                        if (/\d+\.\d+\./.test(tempValue) ||
+                            /[\d\.]{16}/.test(tempValue)) {
+                            tempValue = tempValue.slice(0, -1);
+                        }
+                        // there are two operators after each other
+                        if (/[\+\-\/\*\^]{2}/.test(tempValue)) {
+                            tempValue = tempValue.slice(0, -2) + buttVal;
+                        }
+                        // check if pressing multiple "0"
+                        if (/[\+\-\/\*\^\(\)]0\d$/.test(tempValue)) {
+                            tempValue = tempValue.slice(0, -2) + buttVal;
+                        }
+                        if (/^0\d/.test(tempValue)) {
+                            tempValue = buttVal;
+                        }
+                        // if string starts with either of those
+                        // ('.', '+', '*', '/', '^', '(') it must be incorrect
+                        if (tempValue.length === 1 && /[\.\+\*\/\^\)]/.test(tempValue)) {
+                            tempValue = "";
+                        } else {
+                            showData(improveInput(tempValue));
+                        }
+                }
+            });
+        }
     }
-});
+);
