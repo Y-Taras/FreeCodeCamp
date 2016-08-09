@@ -1,0 +1,72 @@
+@font-face {
+    font-family: "Remachine Script Personal Use";
+    src: url("http://db.onlinewebfonts.com/t/28ac560e1821e50a2af0f8b0830c5998.woff") format("woff"),
+    url("http://db.onlinewebfonts.com/t/28ac560e1821e50a2af0f8b0830c5998.svg#Remachine Script Personal Use") format("svg");
+}
+
+@font-face {
+    font-family: 'digital-7';
+    src: url('https://crossorigin.me/https://github.com/Y-Taras/FreeCodeCamp/raw/master/Calculator/fonts/digital-7%20(italic).ttf') format('truetype');
+}
+
+h1 {
+    font-family: "Remachine Script Personal Use", Serif;
+    color: #761c19;
+}
+
+body {
+    background-image: url('https://lh4.ggpht.com/eaKKhSXDW7JHsMhJnW4UOxl6V_AifpnPTgHjtW6LmJGC5edHW4jPfJBuujzknTCoQA=w170'),
+    url('https://thumbs.dreamstime.com/t/wall-clock-seamless-grey-background-35186607.jpg');
+    background-size: 9%;
+    font-family: 'Sriracha', cursive;
+
+}
+
+.container {
+    background-color: #66afe9;
+    min-height: 100%;
+    width: 70%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.counter {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    height: 34px;
+}
+.counter > span{
+    font-family: digital-7;
+    font-size: 20px;
+}
+
+.progress {
+    height: 34px;
+}
+
+
+.minusBreak, .minusSession,
+.plusBreak, .plusSession {
+background-color: #337ab7;
+}
+
+button {
+    border: 0;
+    outline: 0;
+    width: 50%;
+    border-radius: 11px;
+}
+
+button:active {
+    transform: translateY(4px);
+}
+/*white font in the lines of plus / minus buttons*/
+i.fa{
+    background: url('http://1x1px.me/FFFFFF-0.8.png');
+    background-size: 18px 15px;
+    background-position: 3px 6px;
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Sriracha" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/style.css">
+    <title>Title</title>
+</head>
+<body>
+<div class="container text-center">
+    <h1>FreeCodeCamp</h1>
+    <h3 class="lead">Pomodoro Timer</h3>
+    <div class="row">
+        <div class="col-md-3">
+            <button class="startBut btn btn-primary" value="start">Start</button>
+        </div>
+        <div class="col-md-6">
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar"
+                     aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                </div>
+            </div>
+            <div class="counter">
+                <span class="textBefore"></span>
+                <span class="minutes">__</span>&nbsp;&colon;
+                <span class="seconds">__</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <button class="reset btn btn-danger" value="reset">Reset</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="lead">Settings</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <button type="button" class="minusSession">
+                <i class="fa fa-minus-circle fa-2x text-danger" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="col-md-6">
+            <span class="session">Session length : </span>
+            <span class="sessionLen">25</span>&nbsp;min
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="plusSession">
+                <i class="fa fa-plus-circle fa-2x text-danger" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <div class="space" style="padding-bottom: 15px"></div>
+    <div class="row">
+        <div class="col-md-3">
+            <button type="button" class="minusBreak">
+                <i class="fa fa-minus-square fa-2x text-danger" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="col-md-6">
+            <span class="break">Break length :</span>
+            <span class="breakLen">5</span>&nbsp;min
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="plusBreak">
+                <i class="fa fa-plus-square fa-2x text-danger" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" value="">&nbsp;Play sound</label>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
