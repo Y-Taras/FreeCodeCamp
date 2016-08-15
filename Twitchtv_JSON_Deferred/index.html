@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Twitchtv JSON API</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row text-center title">
+            <span id="title">Twitch TV Streamers:</span>
+            <div class="btn-group pull-right" data-toggle="buttons">
+                <label class="btn btn-primary btn-sm active">
+                    <input type="radio" name="filter" id="all" autocomplete="off" checked> All
+                </label>
+                <label class="btn btn-primary btn-sm">
+                    <input type="radio" name="filter" id="online" autocomplete="off"> Online
+                </label>
+                <label class="btn btn-primary btn-sm">
+                    <input type="radio" name="filter" id="offline" autocomplete="off"> Offline
+                </label>
+            </div>
+        </div>
+        <div class="row vertical-align text-center header">
+            <div class="col-xs-3 col-lg-1">Logo</div>
+            <div class="col-xs-9 col-lg-2">Name</div>
+            <div class="col-xs-12 col-lg-6">Biography</div>
+            <div class="col-xs-12 col-lg-3">Status</div>
+        </div>
+    </div>
+    <div class="copyright"> Icon made from <a href="http://www.onlinewebfonts.com/icon">Icon Fonts</a> is licensed by CC BY 3.0</div>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+
+</html>

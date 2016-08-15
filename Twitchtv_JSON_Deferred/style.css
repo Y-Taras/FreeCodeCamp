@@ -1,0 +1,67 @@
+@font-face {
+    font-family: "Remachine Script Personal Use";
+    src: url("http://db.onlinewebfonts.com/t/28ac560e1821e50a2af0f8b0830c5998.woff") format("woff"), url("http://db.onlinewebfonts.com/t/28ac560e1821e50a2af0f8b0830c5998.svg#Remachine Script Personal Use") format("svg");
+}
+
+body {
+    background-image: url('http://www.aleydasolis.com/en/international-seo-tools/roi-calculator/indiana-bg.png');
+}
+
+.container {
+    width: 80%;
+}
+
+a {
+    color: black;
+    font-size: 15px;
+}
+
+.header {
+    color: white;
+    font-size: 17px;
+    background-color: #337ab7;
+}
+
+#title {
+    font-family: 'Remachine Script Personal Use', sans-serif;
+    font-size: 55px;
+    color: #402449;
+}
+
+.row.text-center.title {
+    background: #aac8d4;
+}
+
+.offline {
+    background: #aac8d4;
+    border: 1px solid white;
+}
+
+.online {
+    background: #dbd7d7;
+    border: 1px solid white;
+}
+
+img {
+    height: 56px;
+    width: 56px;
+}
+
+.vertical-align {
+    display: flex;
+    /* flex-direction: row; 
+    items are centered without it*/ 
+}
+
+.vertical-align > [class*="col-"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Optional, to align inner items 
+    horizontally inside the column */
+}
+
+.copyright {
+    margin: 0 auto;
+    width: 50%
+}
