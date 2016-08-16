@@ -52,15 +52,17 @@ $(document).ready(function() {
                 statusClass = ' online';
             }
             if ((data2.logo === null) || (data2.logo === undefined)) {
-                logo = './logo.svg';
-            } else { logo = data2.logo; }
+                logo = '<svg x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" \
+                xml:space="preserve"><g><path style="fill:#0081AC" d="M493.3,544.7c149.2,0,270.1-119.7,270.1-267.4c0\
+                -147.6-121-267.3-270.1-267.3C344,10,223.1,129.7,223.1,277.3C223.1,425,344,544.7,493.3,544.7z \
+                M500,570C291.2,570,27.2,737.6,27.2,944.3V990h945.6v-45.7C972.8,737.6,708.8,570,500,570z"></path></g></svg>';
+            } else { logo = '<img src="' +data2.logo +'" class="img-thumbnail" alt = "">'; }
             if ((data2.bio === null) || (data2.bio === undefined)) {
                 bio = "";
             } else { bio = data2.bio; }
 
             $('.container').append('<div class="row vertical-align' + statusClass +'">' +
-                '<div class="col-xs-3 col-lg-1"> <img src="' + logo +
-                '" class="img-thumbnail" alt = ""></div>' +
+                '<div class="col-xs-3 col-lg-1">' + logo + '</div>' +
                 '<div class="col-xs-9 col-lg-2 text-center" >' +
                 '<a href= "https://www.twitch.tv/' + channel +
                 '" target = "_blank">' + channel + '</a>' +
