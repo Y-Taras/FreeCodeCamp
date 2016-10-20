@@ -4,7 +4,8 @@
     <title>Tic-Tac-Toe</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/style.css">
 
 </head>
 <body>
@@ -12,38 +13,39 @@
 
 <header>
     <h2>Tic Tac Toe Game</h2>
-    <p>The .table class adds basic styling to a table:</p>
 </header>
 <main>
     <section>
-        <table class="table">
+        <table class="gameTable">
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td id="a1"></td>
+                <td id="a2"></td>
+                <td id="a3"></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td id="b1"></td>
+                <td id="b2"></td>
+                <td id="b3"></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td id="c1"></td>
+                <td id="c2"></td>
+                <td id="c3"></td>
             </tr>
         </table>
     </section>
     <aside>
         <form>
-            <label >Choose to play:</label>
-            <input class="setSign" type="radio" value="o" checked> O
-            <input class="setSign" type="radio" value="x"> X
+            <label>Choose to play:</label><br>
+            <input class="setSign" id="o" name="setSign" type="radio" value="o" autocomplete="off">
+            <i class="fa fa-circle-o"></i>
+            <input class="setSign" id="x" name="setSign" type="radio" value="x" autocomplete="off">
+            <i class="fa fa-times"></i>
         </form>
-
+        <button class="hard-reset">Reset All</button>
     </aside>
-
 </main>
-
+<footer class="hide"></footer>
+<script src="script.js"></script>
 </body>
 </html>

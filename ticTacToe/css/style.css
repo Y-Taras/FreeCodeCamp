@@ -1,0 +1,87 @@
+
+header {
+    margin: 0 29%;
+}
+
+main {
+    margin-left: 25%;
+}
+
+section {
+    float: left;
+}
+
+aside {
+    float: left;
+    margin: 130px 20px;
+}
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+    vertical-align: middle;
+    border-style: hidden;
+}
+
+tr, td {
+    border: 7px solid #444446;
+    width: 100px;
+    height: 100px;
+    transition: background-color .2s;
+    box-shadow: 10px 9px 166px 8px rgba(158, 158, 158, 1);
+}
+
+td:hover {
+    background-color: #5b5b5b;
+    cursor: pointer;
+}
+
+td.winnerLine {
+    background-color: #5b5b5b;
+    transition: opacity 3s linear;
+    opacity: 0.5;
+}
+
+td > .fa-circle-o {
+    color: #444446;
+    font-size: 5em;
+}
+
+td > .fa-times {
+    color: #B62434;
+    font-size: 5em;
+}
+
+form > label {
+    line-height: 150%;
+    font-weight: bold;
+}
+
+form > .fa {
+    color: #5b5b5b;
+    font-size: 1.8em;
+}
+
+button.hard-reset {
+    width: 125px;
+}
+
+footer {
+    clear: both;
+    padding-top: 10px;
+    margin-left: 30%;
+    width: 30%;
+    font-weight: bold;
+    font-size: 150%;
+}
+
+footer.show {
+
+    opacity: 1;
+    transition: opacity 2s linear;
+}
+
+footer.hide {
+    opacity: 0;
+    transition: opacity 2s linear;
+}
