@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simon Game</title>
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/segment7" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="outerCircle">
+    <div class="bigButton" id="greenButton"></div>
+    <div class="bigButton" id="redButton"></div>
+    <div class="bigButton" id="yellowButton"></div>
+    <div class="bigButton" id="blueButton"></div>
+    <div class="bigButton" id="innerCircle">
+        <div class="additionalBorder">
+            <p id="tradeMark">simon<span id="reg">&reg;</span></p>
+            <div class="partition"></div>
+            <div class="buttons">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="innerCount">05</div>
+                        </td>
+                        <td id="startTD">
+                            <button type="button" id="innerStart"></button>
+                        </td>
+                        <td>
+                            <div class="strict">
+                                <div id="strictIndicator"></div>
+                                <button type="button" id="strictButton"></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="labels">
+                        <td>
+                            <div id="countLabel">COUNT</div>
+                        </td>
+                        <td>
+                            <div id="startLabel">START</div>
+                        </td>
+                        <td>
+                            <div id="strictLabel">STRICT</div>
+                        </td>
+                    </tr>
+                </table>
+                <div id="switcher">
+                    <span class="labels">ON</span>
+                    <div class="checkbox">
+                        <input id="checkMe" type="checkbox"/>
+                        <label for="checkMe"></label>
+                    </div>
+                    <span class="labels">OFF</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+@font-face {
+    font-family: myDirector;
+    src: url(./fonts/myDirector-Bold.otf);
+}
+
+#outerCircle {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 560px;
+    border: 2px dotted grey;
+    position: relative;
+}
+
+.bigButton {
+    height: 250px;
+    width: 250px;
+    border: solid #464646;
+
+}
+
+#greenButton {
+    background-color: #23a846;
+    border-radius: 100% 0 0 0;
+    border-width: 20px 10px 10px 20px;
+}
+
+#redButton {
+    background-color: #a50005;
+    border-radius: 0 100% 0 0;
+    border-width: 20px 20px 10px 10px;
+}
+
+#yellowButton {
+    background-color: #a7a408;
+    border-radius: 0 0 0 100%;
+    border-width: 10px 10px 20px 20px;
+}
+
+#blueButton {
+    background-color: #162da7;
+    border-radius: 0 0 100% 0;
+    border-width: 10px 20px 20px 10px;
+}
+
+div#innerCircle {
+    border: 15px solid #464646;
+    border-radius: 50%;
+    position: absolute;
+    top: 25%;
+    right: 25%;
+    background-color: #c4c7ce;
+}
+
+div.additionalBorder {
+    margin: 4px;
+    border-radius: 50%;
+    height: 242px;
+    width: 242px;
+    overflow: hidden;
+
+}
+
+p#tradeMark {
+    margin: auto;
+    height: 104px;
+    text-align: center;
+    font-size: 68px;
+    font-family: myDirector;
+    color: #c4c7ce;
+    background-color: black;
+    border-color: antiquewhite;
+    line-height: 162px;
+}
+
+span#reg {
+    font-size: 12px;
+}
+
+.partition {
+    height: 6px;
+}
+
+.buttons {
+    height: 128px;
+    border-radius: 0 0 128px 128px;
+    border: 2px solid black;
+}
+
+/* Start and Strict buttons*/
+
+table {
+    margin-left: 5px;
+}
+
+td {
+    text-align: center;
+    width: auto;
+    padding: 2px 10px;
+}
+
+#startTD {
+    vertical-align: bottom;
+}
+
+div.innerCount {
+    display: inline-block;
+    width: 54px;
+    height: 40px;
+    background-color: #34000e;
+    color: crimson;
+    border-radius: 11px;
+    font-size: 28px;
+    line-height: 42px;
+    text-align: center;
+    font-family: 'Segment7Standard', italic;
+}
+
+button#innerStart {
+    width: 27px;
+    height: 27px;
+    border: 4px solid #404241;
+    border-radius: 50%;
+    background: #a50005;
+    box-shadow: 0 0 3px gray;
+}
+
+div.strict {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+button#strictButton {
+    width: 27px;
+    height: 27px;
+    border: 4px solid #404241;
+    border-radius: 50%;
+    background: yellow;
+    box-shadow: 0 0 3px gray;
+}
+
+div#strictIndicator {
+    width: 5px;
+    height: 5px;
+    margin-bottom: 2px;
+    background-color: red;
+    border-radius: 50%;
+    border: 2px solid black;
+
+}
+#switcher{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.labels {
+    font-family: 'Roboto', sans-serif;
+    margin: 4px;
+}
+
+/* toggle switch */
+
+.checkbox > input[type=checkbox] {
+    visibility: hidden;
+}
+
+.checkbox {
+    /*
+    left: 36%;
+    */
+    display: inline-block;
+    position: relative;
+    width: 60px;
+    height: 30px;
+    border: 2px solid #424242;
+}
+
+.checkbox > label {
+    position: absolute;
+    width: 30px;
+    height: 26px;
+    top: 2px;
+    left: 2px;
+    background-color: #a50005;
+    cursor: pointer;
+}
+
+.checkbox > input[type=checkbox]:checked + label {
+    left: 28px;
+}
