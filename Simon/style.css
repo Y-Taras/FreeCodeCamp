@@ -16,29 +16,28 @@
     height: 250px;
     width: 250px;
     border: solid #464646;
-
 }
 
 #greenButton {
-    background-color: #23a846;
+    background-color: rgb(9, 174, 37);
     border-radius: 100% 0 0 0;
     border-width: 20px 10px 10px 20px;
 }
 
 #redButton {
-    background-color: #a50005;
+    background-color: rgb(174, 9, 15);
     border-radius: 0 100% 0 0;
     border-width: 20px 20px 10px 10px;
 }
 
 #yellowButton {
-    background-color: #a7a408;
+    background-color: rgb(174, 174, 9);
     border-radius: 0 0 0 100%;
     border-width: 10px 10px 20px 20px;
 }
 
 #blueButton {
-    background-color: #162da7;
+    background-color: rgb(9, 37, 174);
     border-radius: 0 0 100% 0;
     border-width: 10px 20px 20px 10px;
 }
@@ -58,7 +57,6 @@ div.additionalBorder {
     height: 242px;
     width: 242px;
     overflow: hidden;
-
 }
 
 p#tradeMark {
@@ -97,14 +95,10 @@ td {
     text-align: center;
     width: auto;
     padding: 2px 10px;
-}
-
-#startTD {
     vertical-align: bottom;
 }
 
 div.innerCount {
-    display: inline-block;
     width: 54px;
     height: 40px;
     background-color: #34000e;
@@ -123,6 +117,7 @@ button#innerStart {
     border-radius: 50%;
     background: #a50005;
     box-shadow: 0 0 3px gray;
+    cursor: pointer;
 }
 
 div.strict {
@@ -140,22 +135,22 @@ button#strictButton {
     border-radius: 50%;
     background: yellow;
     box-shadow: 0 0 3px gray;
+    cursor: pointer;
 }
 
 div#strictIndicator {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     margin-bottom: 2px;
-    background-color: red;
+    background-color: #850000;
     border-radius: 50%;
-    border: 2px solid black;
-
+    border: 1px solid #5f5f5f;
 }
-#switcher{
+
+#switcher {
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 .labels {
@@ -170,9 +165,6 @@ div#strictIndicator {
 }
 
 .checkbox {
-    /*
-    left: 36%;
-    */
     display: inline-block;
     position: relative;
     width: 60px;
@@ -185,11 +177,11 @@ div#strictIndicator {
     width: 30px;
     height: 26px;
     top: 2px;
-    left: 2px;
+    right: 2px;
     background-color: #a50005;
     cursor: pointer;
 }
 
 .checkbox > input[type=checkbox]:checked + label {
-    left: 28px;
+    right: 28px;
 }
