@@ -5,17 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
 
 </head>
 <body>
-
-
-<header>
-    <h2>Tic Tac Toe Game</h2>
-</header>
 <main>
     <section>
+        <h2>Tic Tac Toe Game</h2>
         <table class="gameTable">
             <tr>
                 <td id="a1"></td>
@@ -33,6 +30,7 @@
                 <td id="c3"></td>
             </tr>
         </table>
+        <footer class="hide"></footer>
     </section>
     <aside>
         <form>
@@ -41,11 +39,12 @@
             <i class="fa fa-circle-o"></i>
             <input class="setSign" id="x" name="setSign" type="radio" value="x" autocomplete="off">
             <i class="fa fa-times"></i>
+            <button type="button" class="hard-reset">
+                <i id="refresh" class="fa fa-refresh fa-2x"></i>
+            </button>
         </form>
-        <button class="hard-reset">Reset All</button>
     </aside>
 </main>
-<footer class="hide"></footer>
 <script src="script.js"></script>
 </body>
 </html>

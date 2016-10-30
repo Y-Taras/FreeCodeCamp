@@ -1,19 +1,21 @@
-
-header {
-    margin: 0 29%;
-}
-
 main {
-    margin-left: 25%;
+    display: table;
+    margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+    color: darkslateblue;
 }
 
 section {
     float: left;
 }
 
+section > h2 {
+    text-align: center;
+}
+
 aside {
     float: left;
-    margin: 130px 20px;
+    margin: 186px 20px;
 }
 
 table {
@@ -57,20 +59,37 @@ form > label {
     font-weight: bold;
 }
 
-form > .fa {
+form > .fa-circle-o {
     color: #5b5b5b;
     font-size: 1.8em;
 }
 
+form > .fa-times {
+    color: #B62434;
+    font-size: 2.1em;
+
+}
+
 button.hard-reset {
-    width: 125px;
+    border: 0;
+    box-shadow: 0 0 0 1px #ccc;
+    border-radius: 20%;
+    margin-left: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+button.hard-reset::-moz-focus-inner {
+    border: 0;
+}
+
+#refresh {
+    transition: all 0.5s ease;
 }
 
 footer {
-    clear: both;
+    text-align: center;
     padding-top: 10px;
-    margin-left: 30%;
-    width: 30%;
     font-weight: bold;
     font-size: 150%;
 }
@@ -78,10 +97,10 @@ footer {
 footer.show {
 
     opacity: 1;
-    transition: opacity 2s linear;
+    transition: opacity 1s linear;
 }
 
 footer.hide {
     opacity: 0;
-    transition: opacity 2s linear;
+    transition: opacity 1s linear;
 }

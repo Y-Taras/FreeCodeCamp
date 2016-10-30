@@ -13,12 +13,12 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(tableElem);
     var board = ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'];
 
-    var Reset = document.getElementsByClassName('hard-reset')[0];
-    Reset.addEventListener('click', resetAll);
+    var reset = document.getElementsByClassName('hard-reset')[0];
+    reset.addEventListener('click', resetAll);
 
     for (var i = 0; i < tableElem.length; i++) {
         tableElem[i].addEventListener("click", function () {
-            if ((signPlayer) && !(this.innerHTML) && (footer.className === "hide"))  {
+            if ((signPlayer) && !(this.innerHTML)) {
                 this.innerHTML = (signPlayer === "o") ? signO : signX;
                 signAI = (signPlayer === 'x') ? 'o' : 'x';
                 switch (this.id) {
@@ -56,31 +56,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function makeMove() {
-
-        var positionAiCoord = getMove();
-        console.log('positionAiCoord', positionAiCoord);
-        if (game.winner(board) === true) {
+        if (game.over(board)[0] === true) {
             footer.innerHTML = "DRAW!";
             footer.className = "show";
             restartGame();
             return;
         }
+        var positionAiCoord = getMove();
+
         tableElem[positionAiCoord].innerHTML = (signAI === 'o') ? signO : signX;
         board[positionAiCoord] = signAI;
-        if (game.winner(board)[0] === "x") {
-            var arr = game.winner(board)[1];
+        if (game.over(board)[0] === "x") {
+            var arr = game.over(board)[1];
             for (var i = 0; i < arr.length; i++) {
                 tableElem[arr[i]].className = "winnerLine";
             }
             footer.innerHTML = "The Winner is X";
             footer.className = "show";
             restartGame();
-            return;
-        } else if (game.winner(board)[0] === "o") {
+        } else if (game.over(board)[0] === "o") {
             footer.innerHTML = "The Winner is O";
             footer.className = "show";
             restartGame();
-            return;
         }
     }
 
@@ -94,13 +91,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function restartGame() {
         board = ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'];
-        setTimeout(hideFooter, 1000);
+        setTimeout(hideFooter, 750);
 
     }
 
     function resetAll() {
+
         board = ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'];
         hideFooter();
+        var refresh = document.getElementById("refresh");
+        refresh.classList.add("fa-spin");
+
+        setTimeout(function () {
+            stopSpinner();
+        }, 700);
+        function stopSpinner() {
+            refresh.classList.remove("fa-spin");
+        }
+
     }
 
     var game = {
@@ -112,32 +120,24 @@ document.addEventListener("DOMContentLoaded", function () {
                     return [board[i], [i, i + 1, i + 2]];
                 }
             }
-            for (var j = 0; j < board.length; j++) {
+            for (var j = 0; j < 3; j++) {
                 if ((board[j] === board[j + 3] && board[j + 3] === board[j + 6]) &&
                     (board[j] !== 'e')) {
                     return [board[j], [j, j + 3, j + 6]];
                 }
             }
 
-            if (board[4] === board[0] && board[4] === board[8] &&
-                board[4] !== 'e') {
+            if ((board[4] === board[0] && board[4] === board[8]) &&
+                (board[4] !== 'e')) {
                 return [board[4], [0, 4, 8]];
             }
-            if (board[4] === board[2] && board[4] === board[6] &&
-                board[4] != 'e') {
+            if ((board[4] === board[2] && board[4] === board[6]) &&
+                (board[4] !== 'e')) {
                 return [board[4], [2, 4, 6]];
             }
-            return board.every(function (element) {
+            return [board.every(function (element) {
                 return element !== 'e';
-            });
-        },
-        winner: function (board) {
-            var winnerArr = game.over(board);
-            if (typeof winnerArr === "boolean") {
-                return winnerArr;
-            }
-            //console.log(winnerArr[0]);
-            return winnerArr;
+            })];
         },
         possible_moves: function (board, sign) {
             var testBoard = [],
@@ -154,20 +154,20 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     function moveScore(board) {
-        //console.log(game.winner(board));
-        if (game.winner(board)[0] === signPlayer) {
-            return -10;
+        var result = game.over(board)[0];
+        if (result === signPlayer) {
+            return -100;
         }
-        if (game.winner(board)[0] === signAI) {
-            return +10;
+        if (result === signAI) {
+            return +100;
         }
         return 0;//Game is a draw
     }
 
     function max(board) {
 
-        if (game.winner(board)[0]) {
-            return board;
+        if (game.over(board)[0]) {
+            return [moveScore(board), []];
         }
         var newGame = [];
         var bestMove = [];
@@ -177,19 +177,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         for (var i = 0; i < movesArray.length; i++) {
             newGame = movesArray[i].slice();
-            score = moveScore(min(newGame));
+            score = min(newGame)[0];
             if (score > best_score) {
                 best_score = score;
                 bestMove = newGame;
             }
         }
-        return bestMove;
+        return [best_score, bestMove];
     }
 
     function min(board) {
 
-        if (game.winner(board)[0]) {
-            return board;
+        if (game.over(board)[0]) {
+            return [moveScore(board), []];
         }
         var newGame = [];
         var worstMove = [];
@@ -199,17 +199,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         for (var i = 0; i < movesArray.length; i++) {
             newGame = movesArray[i].slice();
-            score = moveScore(max(newGame));
+            score = max(newGame)[0];
             if (score < worst_score) {
                 worst_score = score;
                 worstMove = newGame;
             }
         }
-        return worstMove;
+        return [worst_score, worstMove];
     }
 
     function getMove() {
-        var getBestMove = max(board);
+        var getBestMove = max(board)[1];
+        console.log(getBestMove);
         for (var i = 0; i < getBestMove.length; i++) {
             if (getBestMove[i] !== board[i]) {
                 return i;

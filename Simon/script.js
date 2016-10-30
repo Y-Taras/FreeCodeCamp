@@ -19,7 +19,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     startButton.addEventListener("click", function () {
-        playGame();
+        var level = 0;
+        var randIndexArr = getRandArray();
+        playGame(randIndexArr, level);
     });
     strictButton.addEventListener("click", function () {
         strictMode = !strictMode;
@@ -34,26 +36,45 @@ document.addEventListener("DOMContentLoaded", function () {
         return array;
     }
 
-    function checkButton(randIndexArr) {
-        var counter = 0;
+    function checkButton(randIndexArr, counter) {
         var checker = function checker(e) {
+            var index = 0;
             var clickedButtonId = e.target.dataset.sound;
-            changeColor(clickedButtonId);
-            if (+(clickedButtonId) !== randIndexArr[counter]) {
-                return false;
+            lightenButton(clickedButtonId);
+            while (index <= counter) {
+                if (+(clickedButtonId) === randIndexArr[index]) {
+                    if (index === counter) {
+                        counter++;
+                        for (var i = 0; i < 4; i++) {
+                            buttonArray[i].removeEventListener("click", checker, false)
+                        }
+                        playGame(randIndexArr, counter);
+                    }
+                    index++;
+                }
             }
-            counter++;
-            return true;
         };
         for (var i = 0; i < 4; i++) {
             buttonArray[i].addEventListener("click", checker, false)
         }
 
-        return checker;
-
     }
 
-    function changeColor(index) {
+    function playGame(randIndexArr, counter) {
+        if (counter === 22) {
+            return;
+        }
+        for (var k = 0; k <= counter; k++) {
+            gameCount.innerHTML = counter + 1;
+            soundArray[randIndexArr[counter]].play();
+            lightenButton(randIndexArr[counter]);
+            if (k === counter) {
+                checkButton(randIndexArr, counter);
+            }
+        }
+    }
+
+    function lightenButton(index) {
         var oldColor = window.getComputedStyle(buttonArray[index], null)['background-color'];
         var newColor = "";
 
@@ -79,22 +100,4 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(setOldColor, 1500);
     }
 
-    function playGame() {
-        var randIndexArr = getRandArray();
-        for (var i = 0; i <= 22; i++) {
-            for (var j = 0; j <= i; j++) {
-                gameCount.innerHTML = i + 1;
-                soundArray[randIndexArr[j]].play();
-                changeColor(randIndexArr[j]);
-                if (j === i) {
-                    if (!(checkButton(randIndexArr))) {
-                        if (strictMode) {
-                            i = j = 0;// start over from the very beginning
-                        }
-                        j = 0;//start over from the current level
-                    }
-                }
-            }
-        }
-    }
 });
