@@ -16,6 +16,10 @@
     height: 250px;
     width: 250px;
     border: solid #464646;
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+    -o-transition: background-color 0.5s ease;
 }
 
 #greenButton {
@@ -24,10 +28,18 @@
     border-width: 20px 10px 10px 20px;
 }
 
+.liteGreen#greenButton {
+    background-color: #86f999;
+}
+
 #redButton {
     background-color: rgb(174, 9, 15);
     border-radius: 0 100% 0 0;
     border-width: 20px 20px 10px 10px;
+}
+
+.liteRed#redButton {
+    background-color: #f9868a;
 }
 
 #yellowButton {
@@ -36,10 +48,18 @@
     border-width: 10px 10px 20px 20px;
 }
 
+.liteYell#yellowButton {
+    background-color: #f9f986;
+}
+
 #blueButton {
     background-color: rgb(9, 37, 174);
     border-radius: 0 0 100% 0;
     border-width: 10px 20px 20px 10px;
+}
+
+.liteBlue#blueButton {
+    background-color: #8699f9;
 }
 
 div#innerCircle {

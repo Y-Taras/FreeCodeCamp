@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    'use strict';
 
     var checkOn = document.querySelector("input[type=checkbox]");
     var gameCount = document.getElementsByClassName("innerCount")[0];
@@ -8,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var strictMode = false;
 
     var soundArray = document.getElementsByTagName("audio");
-    var buttonArray = document.querySelectorAll(".bigButton");
+    var buttons = document.querySelectorAll(".bigButton");
+    var buttonArray = [].slice.call(buttons, 0);
 
     checkOn.addEventListener("change", function () {
 
@@ -18,11 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
             gameCount.innerHTML = "";
         }
     });
-    startButton.addEventListener("click", function () {
-        var level = 0;
-        var randIndexArr = getRandArray();
-        playGame(randIndexArr, level);
-    });
+
     strictButton.addEventListener("click", function () {
         strictMode = !strictMode;
         strictMode ? strictInd.style.backgroundColor = "#FF0000" :
@@ -33,8 +31,15 @@ document.addEventListener("DOMContentLoaded", function () {
         for (var i = 0; i < 22; i++) {
             array[i] = Math.floor(Math.random() * 4);
         }
+        document.getElementsByClassName("randArray")[0].innerHTML = array;
         return array;
     }
+
+    startButton.addEventListener("click", function () {
+        var level = 0;
+        var randIndexArr = getRandArray();
+        playGame(randIndexArr, level);
+    });
 
     function checkButton(randIndexArr, counter) {
         var checker = function checker(e) {
@@ -50,8 +55,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                         playGame(randIndexArr, counter);
                     }
-                    index++;
                 }
+                index++;
             }
         };
         for (var i = 0; i < 4; i++) {
@@ -61,43 +66,39 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function playGame(randIndexArr, counter) {
+
         if (counter === 22) {
             return;
         }
-        for (var k = 0; k <= counter; k++) {
-            gameCount.innerHTML = counter + 1;
-            soundArray[randIndexArr[counter]].play();
-            lightenButton(randIndexArr[counter]);
-            if (k === counter) {
-                checkButton(randIndexArr, counter);
-            }
-        }
+        gameCount.innerHTML = counter + 1;
+
+        randIndexArr.slice(0, counter + 1).reduce(function (promise, div, index) {
+            return promise.then(function () {
+                lightenButton(div);
+                return new Promise(function (resolve, reject) {
+                    setTimeout(function () {
+                        resolve();
+                    }, 1500);
+                })
+            })
+        }, Promise.resolve());
+        checkButton(randIndexArr, counter);
+
     }
 
-    function lightenButton(index) {
-        var oldColor = window.getComputedStyle(buttonArray[index], null)['background-color'];
-        var newColor = "";
-
-        function setOldColor() {
-            buttonArray[index].style.backgroundColor = oldColor;
-        }
-
-        switch (oldColor) {
-            case "rgb(9, 174, 37)":
-                newColor = "#86f999";
-                break;
-            case "rgb(174, 9, 15)":
-                newColor = "#f9868a";
-                break;
-            case "rgb(174, 174, 9)":
-                newColor = "#f9f986";
-                break;
-            case "rgb(9, 37, 174)":
-                newColor = "#8699f9";
-                break;
-        }
-        buttonArray[index].style.backgroundColor = newColor;
-        setTimeout(setOldColor, 1500);
+    function lightenButton(id) {
+        var lightColorsArr = ["liteGreen", "liteRed", "liteYell", "liteBlue"];
+        var promise = new Promise((resolve, reject) => {
+            soundArray[id].play();
+            buttonArray[id].classList.add(lightColorsArr[id]);
+            setTimeout(function () {
+                resolve();
+            }, 500);
+        });
+        promise.then(function () {
+            buttonArray[id].classList.remove(lightColorsArr[id]);
+        });
+        /*setTimeout(setOldColor, 1000);*/
     }
 
 });
