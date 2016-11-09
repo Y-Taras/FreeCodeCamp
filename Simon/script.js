@@ -38,31 +38,53 @@ document.addEventListener("DOMContentLoaded", function () {
     startButton.addEventListener("click", function () {
         var level = 0;
         var randIndexArr = getRandArray();
-        playGame(randIndexArr, level);
+        sleep(1000).then(function () {
+            playGame(randIndexArr, level);
+        });
     });
+    function sleep(time) {
+        return new Promise(resolve => {
+            setTimeout(resolve, time)
+        })
+
+    }
 
     function checkButton(randIndexArr, counter) {
+        console.log('checkButton');
+        var indexButton = 0;
         var checker = function checker(e) {
-            var index = 0;
             var clickedButtonId = e.target.dataset.sound;
             lightenButton(clickedButtonId);
-            while (index <= counter) {
-                if (+(clickedButtonId) === randIndexArr[index]) {
-                    if (index === counter) {
-                        counter++;
-                        for (var i = 0; i < 4; i++) {
-                            buttonArray[i].removeEventListener("click", checker, false)
-                        }
-                        playGame(randIndexArr, counter);
+            if (+(clickedButtonId) === randIndexArr[indexButton]) {
+                if (indexButton === counter) {
+                    counter++;
+                    for (let i = 0; i < 4; i++) {
+                        buttonArray[i].removeEventListener("click", checker, false)
                     }
+                    sleep(700).then(function () {
+                        playGame(randIndexArr, counter);
+                    });
                 }
-                index++;
+                indexButton++;
+            } else {
+                gameCount.innerHTML = "--";
+                if (strictMode) {
+                    indexButton = 0;
+                    counter = 0;
+                } else {
+                    indexButton = 0;
+                }
+                for (let i = 0; i < 4; i++) {
+                    buttonArray[i].removeEventListener("click", checker, false)
+                }
+                sleep(2000).then(function () {
+                    playGame(randIndexArr, counter);
+                });
             }
         };
         for (var i = 0; i < 4; i++) {
             buttonArray[i].addEventListener("click", checker, false)
         }
-
     }
 
     function playGame(randIndexArr, counter) {
@@ -70,35 +92,33 @@ document.addEventListener("DOMContentLoaded", function () {
         if (counter === 22) {
             return;
         }
+        //Show the level of the Game
         gameCount.innerHTML = counter + 1;
-
+        //Light and play random buttons according to the level
+        //Light and play user's input then check if input is correct
         randIndexArr.slice(0, counter + 1).reduce(function (promise, div, index) {
             return promise.then(function () {
                 lightenButton(div);
                 return new Promise(function (resolve, reject) {
                     setTimeout(function () {
                         resolve();
-                    }, 1500);
+                    }, 1000);
                 })
             })
-        }, Promise.resolve());
-        checkButton(randIndexArr, counter);
-
+        }, Promise.resolve()).then(function () {
+            checkButton(randIndexArr, counter);
+        });
     }
 
     function lightenButton(id) {
         var lightColorsArr = ["liteGreen", "liteRed", "liteYell", "liteBlue"];
-        var promise = new Promise((resolve, reject) => {
-            soundArray[id].play();
-            buttonArray[id].classList.add(lightColorsArr[id]);
-            setTimeout(function () {
-                resolve();
-            }, 500);
+        soundArray[id].play();
+        buttonArray[id].classList.add(lightColorsArr[id]);
+        sleep(500).then(function () {
+            buttonArray[id].classList.remove(lightColorsArr[id])
         });
-        promise.then(function () {
-            buttonArray[id].classList.remove(lightColorsArr[id]);
-        });
-        /*setTimeout(setOldColor, 1000);*/
+
     }
 
-});
+})
+;
