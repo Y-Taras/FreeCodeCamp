@@ -1,8 +1,13 @@
+body{
+  background-image: url("background.png");
+  background-size: 9%;
+}
 #root{
   margin: 10px auto;
-  width: 40%;
+  width: 50%;
   padding: 20px;
   border-radius: 8px 8px;
+  background-color: #d0ffee;
   .panel-group{
     background-color: bisque;
   }
